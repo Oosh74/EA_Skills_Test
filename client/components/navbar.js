@@ -5,13 +5,16 @@ import {Link} from 'react-router-dom';
 import {logout, schoolData} from '../store';
 
 const Navbar = (props) => {
-  useEffect(() => {
-    console.log('props mounted');
-    props.getSchoolData();
-    console.log(props);
-  });
+  /*
+  react hook, useEffect, allows functional components to have similiar functionality
+  to componentDidMount(). [] on line 15 prevents constant updates/infinite loop.
+  */
 
-  console.log(props);
+  useEffect(() => {
+    props.getSchoolData();
+  }, []);
+
+  console.log('THE PROPS --->', props);
   return (
     <div>
       <h1>Education Analytics</h1>
@@ -37,32 +40,23 @@ const Navbar = (props) => {
   );
 };
 
-/**
- * CONTAINER
- */
-const mapState = (state) => {
-  return {
-    isLoggedIn: !!state.user.id,
-    data: state.data,
-  };
-};
+//Redux Logic
 
-const mapDispatch = (dispatch) => {
-  return {
-    handleClick() {
-      dispatch(logout());
-    },
-    getSchoolData: () => {
-      dispatch(schoolData());
-    },
-  };
-};
+const mapState = (state) => ({
+  isLoggedIn: !!state.user.id,
+  data: state.school,
+});
+
+const mapDispatch = (dispatch) => ({
+  handleClick() {
+    dispatch(logout());
+  },
+  getSchoolData: () => dispatch(schoolData()),
+});
 
 export default connect(mapState, mapDispatch)(Navbar);
 
-/**
- * PROP TYPES
- */
+//PROP TYPES
 Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
