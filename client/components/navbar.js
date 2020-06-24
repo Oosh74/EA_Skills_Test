@@ -21,9 +21,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import BarChartIcon from '@material-ui/icons/BarChart';
+import Button from '@material-ui/core/Button';
 
+//Logic/styling for MaterialUI-------------------------
 const drawerWidth = 240;
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -43,9 +44,9 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  menuButton: {
-    marginRight: 36,
-  },
+  // menuButton: {
+  //   marginRight: 36,
+  // },
   hide: {
     display: 'none',
   },
@@ -84,6 +85,14 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  menuButton: {
+    marginRight: 36,
+    marginLeft: -12,
+  },
+  rightToolbar: {
+    marginLeft: 'auto',
+    marginRight: -12,
+  },
 }));
 
 function Navbar(props) {
@@ -96,11 +105,13 @@ function Navbar(props) {
     props.getSchoolData();
   }, []);
 
+  //MaterialUI functions-------------
   console.log('props ------>', props.data.results);
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+  //Functions to control the opening and closing of the side menu
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -133,6 +144,9 @@ function Navbar(props) {
           <Typography variant="h6" noWrap>
             Education Analytics
           </Typography>
+          <Button className={classes.rightToolbar} color="inherit">
+            Login
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -157,11 +171,12 @@ function Navbar(props) {
             )}
           </IconButton>
         </div>
+        <Typography variant="h6">Data</Typography>
         <Divider />
         <List>
           {['Program Percentages', 'Race/Ethnicity', 'Other Metric'].map(
-            (text, index) => (
-              <ListItem button key={text}>
+            (text, number) => (
+              <ListItem button key={number}>
                 <ListItemIcon>
                   {text !== 'Other Metric' ? (
                     <DonutLargeIcon />
@@ -186,7 +201,7 @@ function Navbar(props) {
   );
 }
 
-//Redux Logic
+//------Redux Logic--------------------
 
 const mapState = (state) => ({
   isLoggedIn: !!state.user.id,
@@ -201,9 +216,3 @@ const mapDispatch = (dispatch) => ({
 });
 
 export default connect(mapState, mapDispatch)(Navbar);
-
-//PROP TYPES
-Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
-};
