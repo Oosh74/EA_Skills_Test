@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {logout, schoolData} from '../store';
 
-const Navbar = (props) => {
+function Navbar(props) {
   /*
   react hook, useEffect, allows functional components to have similiar functionality
   to componentDidMount(). [] on line 15 prevents constant updates/infinite loop.
@@ -14,7 +14,8 @@ const Navbar = (props) => {
     props.getSchoolData();
   }, []);
 
-  console.log('THE PROPS --->', props);
+  console.log('props ------>', props.data.results);
+
   return (
     <div>
       <h1>Education Analytics</h1>
@@ -36,9 +37,12 @@ const Navbar = (props) => {
         )}
       </nav>
       <hr />
+      <ul className="mapped-data">
+        {/* <li>Name: {props.data.results} </li> */}
+      </ul>
     </div>
   );
-};
+}
 
 //Redux Logic
 
