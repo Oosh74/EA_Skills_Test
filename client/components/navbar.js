@@ -1,3 +1,4 @@
+//Imports
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -5,23 +6,30 @@ import {Link} from 'react-router-dom';
 import {logout, schoolData} from '../store';
 import clsx from 'clsx';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
+import {
+  Drawer,
+  AppBar,
+  Toolbar,
+  List,
+  CssBaseline,
+  Typography,
+  Divider,
+  IconButton,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Button,
+  BottomNavigation,
+  BottomNavigationAction,
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import BarChartIcon from '@material-ui/icons/BarChart';
-import Button from '@material-ui/core/Button';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+import PrintIcon from '@material-ui/icons/Print';
 
 //Logic/styling for MaterialUI-------------------------
 const drawerWidth = 240;
@@ -44,9 +52,6 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  // menuButton: {
-  //   marginRight: 36,
-  // },
   hide: {
     display: 'none',
   },
@@ -93,23 +98,29 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 'auto',
     marginRight: -12,
   },
+  bottomNav: {
+    width: '100%',
+    position: 'fixed',
+    bottom: 0,
+  },
 }));
 
 function Navbar(props) {
   /*
   react hook, useEffect, allows functional components to have similiar functionality
-  to componentDidMount(). [] on line 15 prevents constant updates/infinite loop.
+  to componentDidMount().
   */
 
   useEffect(() => {
     props.getSchoolData();
-  }, []);
+  }, []); //[] prevents useEffect from constantly updating.
 
   //MaterialUI functions-------------
   console.log('props ------>', props.data.results);
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(0);
 
   //Functions to control the opening and closing of the side menu
   const handleDrawerOpen = () => {
@@ -175,8 +186,8 @@ function Navbar(props) {
         <Divider />
         <List>
           {['Program Percentages', 'Race/Ethnicity', 'Other Metric'].map(
-            (text, number) => (
-              <ListItem button key={number}>
+            (text, idx) => (
+              <ListItem button key={idx}>
                 <ListItemIcon>
                   {text !== 'Other Metric' ? (
                     <DonutLargeIcon />
@@ -197,6 +208,21 @@ function Navbar(props) {
         </Typography>
         <Typography paragraph>More stuff.</Typography>
       </main>
+      <BottomNavigation
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+        showLabels
+        className={classes.bottomNav}
+      >
+        <BottomNavigationAction label="Print Page" icon={<PrintIcon />} />
+        <BottomNavigationAction
+          label="Save As PDF"
+          icon={<PictureAsPdfIcon />}
+        />
+        <BottomNavigationAction label="Download Data" icon={<GetAppIcon />} />
+      </BottomNavigation>
     </div>
   );
 }
