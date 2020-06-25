@@ -1,5 +1,5 @@
-//Imports
-import React, {useEffect} from 'react';
+//----------Imports-------------
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
@@ -31,7 +31,7 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import PrintIcon from '@material-ui/icons/Print';
 
-//Logic/styling for MaterialUI-------------------------
+//---------Logic/styling for MaterialUI---------------------
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,7 +59,6 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
   },
   drawerOpen: {
     width: drawerWidth,
@@ -92,7 +91,6 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: 36,
-    marginLeft: -12,
   },
   rightToolbar: {
     marginLeft: 'auto',
@@ -106,6 +104,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Navbar(props) {
+  //MaterialUI functions-------------
+  const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(0);
+
   /*
   react hook, useEffect, allows functional components to have similiar functionality
   to componentDidMount().
@@ -115,14 +119,9 @@ function Navbar(props) {
     props.getSchoolData();
   }, []); //[] prevents useEffect from constantly updating.
 
-  //MaterialUI functions-------------
-  console.log('props ------>', props.data.results);
-  const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(0);
+  console.log('PROPS -------->', props.school);
 
-  //Functions to control the opening and closing of the side menu
+  //These two functions control the opening and closing of side menu
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -204,7 +203,9 @@ function Navbar(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography paragraph>
-          Some graphs will go here and other stuff.
+          Name:{props.school.name}, Website: {props.school.school_url} City:
+          State:{props.school.state} Zip:{props.school.zip} Total Students:
+          {props.total.grad_12_month + props.total.undergrad_12_month}
         </Typography>
         <Typography paragraph>More stuff.</Typography>
       </main>
@@ -229,10 +230,16 @@ function Navbar(props) {
 
 //------Redux Logic--------------------
 
-const mapState = (state) => ({
-  isLoggedIn: !!state.user.id,
-  data: state.school,
-});
+const mapState = (state) => {
+  return {
+    isLoggedIn: !!state.user.id,
+    school: state.data.school,
+    ethnicityData: state.data.ethData,
+    programData: state.data.progData,
+    retentionData: state.data.retData,
+    total: state.data.total,
+  };
+};
 
 const mapDispatch = (dispatch) => ({
   handleClick() {
