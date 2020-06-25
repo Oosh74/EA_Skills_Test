@@ -1,6 +1,5 @@
-//Imports
-import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
+//----------Imports-------------
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {logout, schoolData} from '../store';
@@ -21,6 +20,9 @@ import {
   Button,
   BottomNavigation,
   BottomNavigationAction,
+  Container,
+  Grid,
+  Paper,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -30,8 +32,9 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import PrintIcon from '@material-ui/icons/Print';
+import SchoolInfo from './school-info';
 
-//Logic/styling for MaterialUI-------------------------
+//---------Logic/styling for MaterialUI---------------------
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,7 +62,6 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
   },
   drawerOpen: {
     width: drawerWidth,
@@ -90,10 +92,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
-  menuButton: {
-    marginRight: 36,
-    marginLeft: -12,
-  },
+  // menuButton: {
+  //   marginRight: 36,
+  // },
   rightToolbar: {
     marginLeft: 'auto',
     marginRight: -12,
@@ -103,9 +104,25 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     bottom: 0,
   },
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+  },
+  fixedHeight: {
+    height: 240,
+  },
 }));
 
 function Navbar(props) {
+  //MaterialUI -------------
+  const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(0);
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
   /*
   react hook, useEffect, allows functional components to have similiar functionality
   to componentDidMount().
@@ -115,14 +132,9 @@ function Navbar(props) {
     props.getSchoolData();
   }, []); //[] prevents useEffect from constantly updating.
 
-  //MaterialUI functions-------------
-  console.log('props ------>', props.data.results);
-  const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(0);
+  console.log('PROPS -------->', props.school);
 
-  //Functions to control the opening and closing of the side menu
+  //These two functions control the opening and closing of side menu
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -203,10 +215,28 @@ function Navbar(props) {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph>
-          Some graphs will go here and other stuff.
-        </Typography>
-        <Typography paragraph>More stuff.</Typography>
+        <Container maxWidth="lg" className={classes.container}>
+          <Grid container spacing={3}>
+            {/* Chart */}
+            <Grid item xs={12} md={8} lg={9}>
+              <Paper className={fixedHeightPaper}>
+                <Typography> Test </Typography>
+              </Paper>
+            </Grid>
+            {/* Recent Deposits */}
+            <Grid item xs={12} md={4} lg={3}>
+              <Paper className={fixedHeightPaper}>
+                <SchoolInfo school={props.school} total={props.total} />
+              </Paper>
+            </Grid>
+            {/* Recent Orders */}
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Typography> Test </Typography>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>
       </main>
       <BottomNavigation
         value={value}
@@ -229,10 +259,16 @@ function Navbar(props) {
 
 //------Redux Logic--------------------
 
-const mapState = (state) => ({
-  isLoggedIn: !!state.user.id,
-  data: state.school,
-});
+const mapState = (state) => {
+  return {
+    isLoggedIn: !!state.user.id,
+    school: state.data.school,
+    ethnicityData: state.data.ethData,
+    programData: state.data.progData,
+    retentionData: state.data.retData,
+    total: state.data.total,
+  };
+};
 
 const mapDispatch = (dispatch) => ({
   handleClick() {
