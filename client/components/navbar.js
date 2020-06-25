@@ -20,6 +20,9 @@ import {
   Button,
   BottomNavigation,
   BottomNavigationAction,
+  Container,
+  Grid,
+  Paper,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -29,6 +32,7 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import PrintIcon from '@material-ui/icons/Print';
+import SchoolInfo from './school-info';
 
 //---------Logic/styling for MaterialUI---------------------
 const drawerWidth = 240;
@@ -88,9 +92,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
-  menuButton: {
-    marginRight: 36,
-  },
+  // menuButton: {
+  //   marginRight: 36,
+  // },
   rightToolbar: {
     marginLeft: 'auto',
     marginRight: -12,
@@ -100,14 +104,24 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     bottom: 0,
   },
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+  },
+  fixedHeight: {
+    height: 240,
+  },
 }));
 
 function Navbar(props) {
-  //MaterialUI functions-------------
+  //MaterialUI -------------
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(0);
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   /*
   react hook, useEffect, allows functional components to have similiar functionality
@@ -201,12 +215,28 @@ function Navbar(props) {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph>
-          Name:{props.school.name}, Website: {props.school.school_url} City:
-          State:{props.school.state} Zip:{props.school.zip} Total Students:
-          {props.total.grad_12_month + props.total.undergrad_12_month}
-        </Typography>
-        <Typography paragraph>More stuff.</Typography>
+        <Container maxWidth="lg" className={classes.container}>
+          <Grid container spacing={3}>
+            {/* Chart */}
+            <Grid item xs={12} md={8} lg={9}>
+              <Paper className={fixedHeightPaper}>
+                <Typography> Test </Typography>
+              </Paper>
+            </Grid>
+            {/* Recent Deposits */}
+            <Grid item xs={12} md={4} lg={3}>
+              <Paper className={fixedHeightPaper}>
+                <SchoolInfo school={props.school} total={props.total} />
+              </Paper>
+            </Grid>
+            {/* Recent Orders */}
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Typography> Test </Typography>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>
       </main>
       <BottomNavigation
         value={value}

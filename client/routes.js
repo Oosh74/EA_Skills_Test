@@ -5,9 +5,7 @@ import PropTypes from 'prop-types';
 import {Login, Signup, UserHome} from './components';
 import {me} from './store';
 
-/**
- * COMPONENT
- */
+//COMPONENT
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
@@ -57,9 +55,8 @@ const mapDispatch = (dispatch) => {
 // when the url changes
 export default withRouter(connect(mapState, mapDispatch)(Routes));
 
-/**
- * PROP TYPES
- */
+//PROP TYPES
+
 Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
