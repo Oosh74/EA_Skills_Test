@@ -2,7 +2,13 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {logout, schoolData} from '../store';
+import {
+  logout,
+  schoolData,
+  handleProgClickThunk,
+  handleEthnClickThunk,
+  handleRetClickThunk,
+} from '../store';
 import clsx from 'clsx';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import {
@@ -33,6 +39,7 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import PrintIcon from '@material-ui/icons/Print';
 import SchoolInfo from './school-info';
+import ProgramPercentages from './program-percentages';
 
 //---------Logic/styling for MaterialUI---------------------
 const drawerWidth = 240;
@@ -127,12 +134,9 @@ function Navbar(props) {
   react hook, useEffect, allows functional components to have similiar functionality
   to componentDidMount().
   */
-
   useEffect(() => {
     props.getSchoolData();
   }, []); //[] prevents useEffect from constantly updating.
-
-  console.log('PROPS -------->', props.school);
 
   //These two functions control the opening and closing of side menu
   const handleDrawerOpen = () => {
@@ -197,42 +201,47 @@ function Navbar(props) {
         <Typography variant="h6">Data</Typography>
         <Divider />
         <List>
-          {['Program Percentages', 'Race/Ethnicity', 'Other Metric'].map(
-            (text, idx) => (
-              <ListItem button key={idx}>
-                <ListItemIcon>
-                  {text !== 'Other Metric' ? (
-                    <DonutLargeIcon />
-                  ) : (
-                    <BarChartIcon />
-                  )}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            )
-          )}
+          {/* Program Button */}
+          <ListItem button onClick={() => props.handleProgClick()}>
+            <ListItemIcon>
+              <DonutLargeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Program Percentages" />
+          </ListItem>
+          {/* Ethnicity Button */}
+          <ListItem button onClick={() => props.handleEthnClick()}>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Race/Ethnicity" />
+          </ListItem>
+          {/* Retention Button */}
+          <ListItem button onClick={() => props.handleRetClick()}>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Retention" />
+          </ListItem>
         </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Chart */}
+            {/* Chart Data Grid */}
             <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Typography> Test </Typography>
-              </Paper>
+              <Paper className={fixedHeightPaper}> Placeholder</Paper>
             </Grid>
-            {/* Recent Deposits */}
+            {/* School Data Grid */}
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <SchoolInfo school={props.school} total={props.total} />
               </Paper>
             </Grid>
             {/* Recent Orders */}
-            <Grid item xs={12}>
+            <Grid item xs={6} md={6} lg={6}>
               <Paper className={classes.paper}>
-                <Typography> Test </Typography>
+                <ProgramPercentages programData={props.programData} />
               </Paper>
             </Grid>
           </Grid>
@@ -261,7 +270,6 @@ function Navbar(props) {
 
 const mapState = (state) => {
   return {
-    isLoggedIn: !!state.user.id,
     school: state.data.school,
     ethnicityData: state.data.ethData,
     programData: state.data.progData,
@@ -271,10 +279,10 @@ const mapState = (state) => {
 };
 
 const mapDispatch = (dispatch) => ({
-  handleClick() {
-    dispatch(logout());
-  },
   getSchoolData: () => dispatch(schoolData()),
+  handleProgClick: () => dispatch(handleProgClickThunk()),
+  handleEthnClick: () => dispatch(handleEthnClickThunk()),
+  handleRetClick: () => dispatch(handleRetClickThunk()),
 });
 
 export default connect(mapState, mapDispatch)(Navbar);

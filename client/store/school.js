@@ -93,7 +93,6 @@ export default function (state = schoolDataState, action) {
       return {...state, retData: action.retention};
     case GET_TOTAL:
       return {...state, total: action.total};
-
     default:
       return state;
   }
