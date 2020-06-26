@@ -39,7 +39,7 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import PrintIcon from '@material-ui/icons/Print';
 import SchoolInfo from './school-info';
-import ProgramPercentages from './program-percentages';
+import ProgramChart from './program-chart';
 import EthnicityChart from './ethnicity-chart';
 
 //---------Logic/styling for MaterialUI---------------------
@@ -148,11 +148,12 @@ function Navbar(props) {
     setOpen(false);
   };
 
+  //Utility function that helps pick which chart to render based on redux state
   const chartRender = (prog, ethn, ret) => {
     if (prog) {
-      return <ProgramPercentages programData={props.programData} />;
+      return <ProgramChart programData={props.programData} />;
     } else if (ethn) {
-      return <EthnicityChart />;
+      return <EthnicityChart ethnicityData={props.ethnicityData} />;
     } else if (ret) {
       return (
         <div>
@@ -161,9 +162,11 @@ function Navbar(props) {
       );
     }
   };
+
   return (
     <div className={classes.root}>
       <CssBaseline />
+      {/* <------- TOP NAV -------> */}
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
@@ -190,6 +193,7 @@ function Navbar(props) {
           </Button>
         </Toolbar>
       </AppBar>
+      {/* <------- SIDE NAV -------> */}
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
@@ -225,7 +229,7 @@ function Navbar(props) {
           {/* Ethnicity Button */}
           <ListItem button onClick={() => props.handleEthnClick()}>
             <ListItemIcon>
-              <BarChartIcon />
+              <DonutLargeIcon />
             </ListItemIcon>
             <ListItemText primary="Race/Ethnicity" />
           </ListItem>
@@ -243,10 +247,9 @@ function Navbar(props) {
         <div className={classes.toolbar} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Chart Data Grid */}
+            {/* <------- Grid items -------> */}
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
-                {' '}
                 <EthnicityChart />
               </Paper>
             </Grid>
@@ -256,7 +259,7 @@ function Navbar(props) {
                 <SchoolInfo school={props.school} total={props.total} />
               </Paper>
             </Grid>
-            {/* Recent Orders */}
+            {/* CHARTS */}
             <Grid item xs={6} md={6} lg={6}>
               <Paper className={classes.paper}>
                 {/* <ProgramPercentages programData={props.programData} /> */}
@@ -287,7 +290,6 @@ function Navbar(props) {
 }
 
 //------Redux Logic--------------------
-
 const mapState = (state) => {
   return {
     school: state.data.school,

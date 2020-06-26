@@ -2,16 +2,15 @@ import React from 'react';
 import {VictoryPie, VictoryTheme, VictoryTooltip} from 'victory';
 import {Container} from '@material-ui/core';
 
-export default function EthnicityChart(props) {
+export default function ProgramChart(props) {
   const data = [];
-  console.log(props);
 
-  for (let key in props.ethnicityData) {
+  for (let key in props.programData) {
     if (
-      props.ethnicityData[key] !== null &&
-      Math.ceil(props.ethnicityData[key] * 100) > 0
+      props.programData[key] !== null &&
+      Math.ceil(props.programData[key] * 100) > 0
     ) {
-      data.push({x: key, y: Math.ceil(props.ethnicityData[key] * 100)});
+      data.push({x: key, y: Math.ceil(props.programData[key] * 100)});
     }
   }
 
