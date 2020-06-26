@@ -40,6 +40,7 @@ import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import PrintIcon from '@material-ui/icons/Print';
 import SchoolInfo from './school-info';
 import ProgramPercentages from './program-percentages';
+import EthnicityChart from './ethnicity-chart';
 
 //---------Logic/styling for MaterialUI---------------------
 const drawerWidth = 240;
@@ -147,6 +148,19 @@ function Navbar(props) {
     setOpen(false);
   };
 
+  const chartRender = (prog, ethn, ret) => {
+    if (prog) {
+      return <ProgramPercentages programData={props.programData} />;
+    } else if (ethn) {
+      return <EthnicityChart />;
+    } else if (ret) {
+      return (
+        <div>
+          <h6> TEST</h6>
+        </div>
+      );
+    }
+  };
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -224,13 +238,17 @@ function Navbar(props) {
           </ListItem>
         </List>
       </Drawer>
+      {/* <------- CONTENT -------> */}
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             {/* Chart Data Grid */}
             <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}> Placeholder</Paper>
+              <Paper className={fixedHeightPaper}>
+                {' '}
+                <EthnicityChart />
+              </Paper>
             </Grid>
             {/* School Data Grid */}
             <Grid item xs={12} md={4} lg={3}>
@@ -241,12 +259,14 @@ function Navbar(props) {
             {/* Recent Orders */}
             <Grid item xs={6} md={6} lg={6}>
               <Paper className={classes.paper}>
-                <ProgramPercentages programData={props.programData} />
+                {/* <ProgramPercentages programData={props.programData} /> */}
+                {chartRender(props.progBtn, props.ethnBtn, props.retBtn)}
               </Paper>
             </Grid>
           </Grid>
         </Container>
       </main>
+      {/* <------- BOTTOM NAV -------> */}
       <BottomNavigation
         value={value}
         onChange={(event, newValue) => {
@@ -275,6 +295,9 @@ const mapState = (state) => {
     programData: state.data.progData,
     retentionData: state.data.retData,
     total: state.data.total,
+    progBtn: state.buttons.progBtn,
+    ethnBtn: state.buttons.ethnBtn,
+    retBtn: state.buttons.retBtn,
   };
 };
 

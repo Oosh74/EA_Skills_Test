@@ -7,3 +7,4 @@
 export {default as Navbar} from './navbar';
 export {default as SchoolInfo} from './school-info';
 export {default as ProgramPercentages} from './program-percentages';
+export {default as EthnicityChart} from './ethnicity-chart';

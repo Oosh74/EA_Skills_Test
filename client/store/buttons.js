@@ -45,17 +45,20 @@ export const handleRetClickThunk = () => (dispatch) => {
 };
 
 //INITIAL STATE
-const buttonState = [];
+const buttonState = {progBtn: false, ethnBtn: false, retBtn: false};
 
 //REDUCER
 export default function (state = buttonState, action) {
   switch (action.type) {
     case PROG_BUTN:
-      return [...state, console.log('Prog Clicked')];
+      console.log('Prog Clicked');
+      return {...state, progBtn: true, ethnBtn: false, retBtn: false};
     case ETHN_BUTN:
-      return [...state, console.log('ETHN Clicked')];
+      console.log('Ethn Clicked');
+      return {...state, progBtn: false, ethnBtn: true, retBtn: false};
     case RET_BUTN:
-      return [...state, console.log('RET Clicked')];
+      console.log('Ret Clicked');
+      return {...state, progBtn: false, ethnBtn: false, retBtn: true};
     default:
       return state;
   }
