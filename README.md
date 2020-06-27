@@ -2,9 +2,10 @@
 
 This app was built for the Education Analytics Skills Assessment. The core feature of the web app is for data visualization and retrieval. 
 
-## Getting Started
-
+## How To Use:
+Simply vist the site below. 
 - [Deployed Site](https://ea-skill-test.herokuapp.com/)
+Once there, feel free to check out the core features. The left hand panel can be opened and will allow you to navigate to the different charts, and the bottom navbar will be accessible to print the page, download the page as a .pdf, or retrieve the current data set you are viewing. 
 
 ## Core Technologies
 - [Redux](https://redux.js.org/) - Used for API access and state management.
