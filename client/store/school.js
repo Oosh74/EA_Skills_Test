@@ -9,7 +9,6 @@ const GET_TOTAL = 'GET_TOTAL';
 
 //ACTION CREATORS
 const getSchool = (school) => ({type: GET_SCHOOL, school});
-// const getYear = (year) => ({type: GET_YEAR, year});
 const getEthnicity = (ethnicity) => ({type: GET_ETHN, ethnicity});
 const getProgram = (program) => ({type: GET_PROG, program});
 const getRetention = (retention) => ({type: GET_RET, retention});
@@ -19,7 +18,7 @@ const getTotal = (total) => ({type: GET_TOTAL, total});
 export const schoolData = () => async (dispatch) => {
   try {
     const res = await axios.get(
-      'https://api.data.gov/ed/collegescorecard/v1/schools?school.operating=1&2015.academics.program_available.assoc_or_bachelors=true&2015.student.size__range=1..&school.degrees_awarded.predominant__range=1..3&school.degrees_awarded.highest__range=2..4&id=240444&api_key=zzjr15eeTFdxvmeMjB7CVCB6WtMzw1uh9IikvyMA'
+      `https://api.data.gov/ed/collegescorecard/v1/schools?school.operating=1&2015.academics.program_available.assoc_or_bachelors=true&2015.student.size__range=1..&school.degrees_awarded.predominant__range=1..3&school.degrees_awarded.highest__range=2..4&id=240444&api_key=zzjr15eeTFdxvmeMjB7CVCB6WtMzw1uh9IikvyMA`
     );
 
     /*
@@ -34,7 +33,7 @@ export const schoolData = () => async (dispatch) => {
     //objects to store our data
     const school = {};
     const year = {};
-    console.log(newData.latest);
+
     //Maps the correct data into the variables/objects above
     if (newData.hasOwnProperty('school')) {
       for (let key in newData.school) {

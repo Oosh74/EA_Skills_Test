@@ -1,6 +1,6 @@
 import React from 'react';
 import {VictoryPie, VictoryTheme, VictoryTooltip} from 'victory';
-import {Container} from '@material-ui/core';
+import {Container, Typography} from '@material-ui/core';
 
 export default function ProgramChart(props) {
   const data = [];
@@ -16,6 +16,9 @@ export default function ProgramChart(props) {
 
   return (
     <Container>
+      <Typography variant="h6" color="primary">
+        Chart
+      </Typography>
       <VictoryPie
         innerRadius={100}
         padAngle={2}
