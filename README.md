@@ -25,5 +25,5 @@ Tech used for stretch goals/features that were out of scope of the assigned task
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
-- [Fullstack Academy] (https://github.com/FullstackAcademy) for Boilermaker. 
+- [Fullstack Academy](https://github.com/FullstackAcademy) for Boilermaker. 
 - [Education Analytics](https://edanalytics.org/) for the amazing opportunity to work on this coding challenge. 
