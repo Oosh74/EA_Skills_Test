@@ -1,10 +1,9 @@
 import React from 'react';
 import {VictoryPie, VictoryTheme, VictoryTooltip} from 'victory';
-import {Container} from '@material-ui/core';
+import {Container, Typography} from '@material-ui/core';
 
 export default function EthnicityChart(props) {
   const data = [];
-  console.log(props);
 
   for (let key in props.ethnicityData) {
     if (
@@ -17,6 +16,9 @@ export default function EthnicityChart(props) {
 
   return (
     <Container>
+      <Typography variant="h6" color="primary">
+        Chart
+      </Typography>
       <VictoryPie
         innerRadius={100}
         padAngle={2}

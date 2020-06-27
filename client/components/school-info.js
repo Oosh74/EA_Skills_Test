@@ -1,5 +1,5 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import {Typography, Link} from '@material-ui/core';
 
 export default function SchoolInfo(props) {
   return (
@@ -13,7 +13,11 @@ export default function SchoolInfo(props) {
       <Typography variant="body1">
         Students: {props.total.grad_12_month + props.total.undergrad_12_month}
       </Typography>
-      <Typography color="textSecondary">{props.school.school_url}</Typography>
+      <Typography color="textSecondary">
+        <Link href={`https://${props.school.school_url}`}>
+          {props.school.school_url}
+        </Link>
+      </Typography>
     </React.Fragment>
   );
 }

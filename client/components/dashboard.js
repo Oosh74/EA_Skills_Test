@@ -1,9 +1,7 @@
 //----------Imports-------------
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
 import {
-  logout,
   schoolData,
   handleProgClickThunk,
   handleEthnClickThunk,
@@ -30,7 +28,7 @@ import {
   Grid,
   Paper,
 } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import {Menu} from '@material-ui/icons/';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
@@ -38,12 +36,18 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import PrintIcon from '@material-ui/icons/Print';
-import SchoolInfo from './school-info';
-import ProgramChart from './program-chart';
-import EthnicityChart from './ethnicity-chart';
+import {
+  EthnicityChart,
+  ProgramChart,
+  RetChart,
+  SchoolInfo,
+  Welcome,
+} from '../components';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 //---------Logic/styling for MaterialUI---------------------
-const drawerWidth = 240;
+const drawerWidth = 245;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -100,9 +104,6 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
-  // menuButton: {
-  //   marginRight: 36,
-  // },
   rightToolbar: {
     marginLeft: 'auto',
     marginRight: -12,
@@ -123,12 +124,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Navbar(props) {
+function Dashboard(props) {
   //MaterialUI -------------
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(0);
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   /*
@@ -143,9 +143,24 @@ function Navbar(props) {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  //Function for saving page as PDF.
+  const pageToPdf = () => {
+    //Grabs div to capture
+    const input = document.getElementById('divToPrint');
+    html2canvas(input).then((canvas) => {
+      //converts page to img
+      const img = canvas.toDataURL('image/png');
+      //creates new PDF
+      const pdf = new jsPDF('p', 'mm', [window.innerWidth, window.innerHeight]);
+      //Adds image to PDF
+      pdf.addImage(img, 'JPEG', 0, 0);
+      //saves the image as PDF
+      pdf.save('download.pdf');
+    });
   };
 
   //Utility function that helps pick which chart to render based on redux state
@@ -155,16 +170,35 @@ function Navbar(props) {
     } else if (ethn) {
       return <EthnicityChart ethnicityData={props.ethnicityData} />;
     } else if (ret) {
-      return (
-        <div>
-          <h6> TEST</h6>
-        </div>
-      );
+      return <RetChart retentionData={props.retentionData} />;
     }
   };
 
+  //Download data button utility function
+  const downloadHelper = () => {
+    let link = '';
+    if (props.progBtn) {
+      link =
+        'https://drive.google.com/uc?export=download&id=1zy5OPZs4Rdc-7OoF-Mat9Hqfz_1YdYcJ';
+    } else if (props.ethnBtn) {
+      link =
+        'https://drive.google.com/uc?export=download&id=1HbtNx-XulTzCZ3ClFcTpJvNaLdTBretH';
+    } else {
+      link =
+        'https://drive.google.com/uc?export=download&id=1oX8NAKUAFCPwo0hATFnEiocbpYErfeMS';
+    }
+    return (
+      <BottomNavigationAction
+        href={`${link}`}
+        download
+        label="Download Current Data"
+        icon={<GetAppIcon />}
+      />
+    );
+  };
+
   return (
-    <div className={classes.root}>
+    <div id="divToPrint" className={classes.root}>
       <CssBaseline />
       {/* <------- TOP NAV -------> */}
       <AppBar
@@ -183,7 +217,7 @@ function Navbar(props) {
               [classes.hide]: open,
             })}
           >
-            <MenuIcon />
+            <Menu />
           </IconButton>
           <Typography variant="h6" noWrap>
             Education Analytics
@@ -216,7 +250,9 @@ function Navbar(props) {
             )}
           </IconButton>
         </div>
-        <Typography variant="h6">Data</Typography>
+        <Typography variant="h6" align="center">
+          Data
+        </Typography>
         <Divider />
         <List>
           {/* Program Button */}
@@ -231,14 +267,14 @@ function Navbar(props) {
             <ListItemIcon>
               <DonutLargeIcon />
             </ListItemIcon>
-            <ListItemText primary="Race/Ethnicity" />
+            <ListItemText primary="Ethnicity Percentages" />
           </ListItem>
           {/* Retention Button */}
           <ListItem button onClick={() => props.handleRetClick()}>
             <ListItemIcon>
               <BarChartIcon />
             </ListItemIcon>
-            <ListItemText primary="Retention" />
+            <ListItemText primary="Retention Percentages" />
           </ListItem>
         </List>
       </Drawer>
@@ -248,9 +284,10 @@ function Navbar(props) {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             {/* <------- Grid items -------> */}
+            {/* Welcome */}
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
-                <EthnicityChart />
+                <Welcome />
               </Paper>
             </Grid>
             {/* School Data Grid */}
@@ -259,31 +296,41 @@ function Navbar(props) {
                 <SchoolInfo school={props.school} total={props.total} />
               </Paper>
             </Grid>
-            {/* CHARTS */}
+          </Grid>
+          {/* CHARTS */}
+          <Grid container spacing={3} justify="center">
             <Grid item xs={6} md={6} lg={6}>
               <Paper className={classes.paper}>
-                {/* <ProgramPercentages programData={props.programData} /> */}
                 {chartRender(props.progBtn, props.ethnBtn, props.retBtn)}
               </Paper>
             </Grid>
           </Grid>
         </Container>
       </main>
+
       {/* <------- BOTTOM NAV -------> */}
-      <BottomNavigation
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        showLabels
-        className={classes.bottomNav}
-      >
-        <BottomNavigationAction label="Print Page" icon={<PrintIcon />} />
+      <BottomNavigation showLabels className={classes.bottomNav}>
+        <BottomNavigationAction
+          label="Print Page"
+          icon={<PrintIcon />}
+          onClick={() => {
+            window.print();
+          }}
+        />
         <BottomNavigationAction
           label="Save As PDF"
           icon={<PictureAsPdfIcon />}
+          onClick={() => {
+            pageToPdf();
+          }}
         />
-        <BottomNavigationAction label="Download Data" icon={<GetAppIcon />} />
+        {/* <BottomNavigationAction
+          href={downloadHelper}
+          download
+          label="Download Data"
+          icon={<GetAppIcon />}
+        /> */}
+        {downloadHelper()}
       </BottomNavigation>
     </div>
   );
@@ -310,4 +357,4 @@ const mapDispatch = (dispatch) => ({
   handleRetClick: () => dispatch(handleRetClickThunk()),
 });
 
-export default connect(mapState, mapDispatch)(Navbar);
+export default connect(mapState, mapDispatch)(Dashboard);
