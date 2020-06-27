@@ -169,7 +169,7 @@ function Dashboard(props) {
       return <ProgramChart programData={props.programData} />;
     } else if (ethn) {
       return <EthnicityChart ethnicityData={props.ethnicityData} />;
-    } else if (ret) {
+    } else {
       return <RetChart retentionData={props.retentionData} />;
     }
   };
