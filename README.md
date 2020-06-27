@@ -11,7 +11,7 @@ Once there, feel free to check out the core features. The left hand panel can be
 - [Redux](https://redux.js.org/) - Used for API access and state management.
 - [React](https://reactjs.org/) - The front-end framework.
 - [Material-UI](https://material-ui.com/) - Library used to design the UI.
--[VictoryChart](https://formidable.com/open-source/victory/) - Library used for data visualization. 
+- [VictoryChart](https://formidable.com/open-source/victory/) - Library used for data visualization. 
 
 Tech used for stretch goals/features that were out of scope of the assigned tasks: 
 - [Sequelize](https://sequelize.org/) - A promise-based ORM, used to create models for the database.
