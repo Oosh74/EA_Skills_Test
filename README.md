@@ -5,12 +5,13 @@ This app was built for the Education Analytics Skills Assessment. The core featu
 ## How To Use:
 Simply vist the site below. 
 - [Deployed Site](https://ea-skill-test.herokuapp.com/)
-Once there, feel free to check out the core features. The left hand panel can be opened and will allow you to navigate to the different charts, and the bottom navbar will be accessible to print the page, download the page as a .pdf, or retrieve the current data set you are viewing. 
+Once there, feel free to check out the core features. The left hand panel can be opened and will allow you to navigate to the different charts, and the bottom navbar will be accessible to print the page, download the page as a .pdf, or retrieve the current data set you are viewing. Hover your mouse over the charts for tooltip displays.
 
 ## Core Technologies
 - [Redux](https://redux.js.org/) - Used for API access and state management.
 - [React](https://reactjs.org/) - The front-end framework.
-- [Material-UI](https://material-ui.com/) - library used to design the UI.
+- [Material-UI](https://material-ui.com/) - Library used to design the UI.
+-[VictoryChart](https://formidable.com/open-source/victory/) - Library used for data visualization. 
 
 Tech used for stretch goals/features that were out of scope of the assigned tasks: 
 - [Sequelize](https://sequelize.org/) - A promise-based ORM, used to create models for the database.
