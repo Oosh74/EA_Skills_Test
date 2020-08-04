@@ -1,6 +1,6 @@
-# Education Analytics Skills Assessment
+# Data Dashboard
 
-This app was built for the Education Analytics Skills Assessment. The core feature of the web app is for data visualization and retrieval. 
+This app is a mock dashboard for data visualization and retrieval. 
 
 ## How To Use:
 Simply vist the site below. 
@@ -12,8 +12,6 @@ Once there, feel free to check out the core features. The left hand panel can be
 - [React](https://reactjs.org/) - The front-end framework.
 - [Material-UI](https://material-ui.com/) - Library used to design the UI.
 - [VictoryChart](https://formidable.com/open-source/victory/) - Library used for data visualization. 
-
-Tech used for stretch goals/features that were out of scope of the assigned tasks: 
 - [Sequelize](https://sequelize.org/) - A promise-based ORM, used to create models for the database.
 - [Express](https://expressjs.com/) - A framework used to build APIs and servers. 
 - [PostgreSQL](https://www.postgresql.org/) - A relational database management system (RDBMS).
@@ -26,5 +24,4 @@ Tech used for stretch goals/features that were out of scope of the assigned task
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
-- [Fullstack Academy](https://github.com/FullstackAcademy) for Boilermaker. 
-- [Education Analytics](https://edanalytics.org/) for the amazing opportunity to work on this coding challenge. 
+- [Fullstack Academy](https://github.com/FullstackAcademy) for Boilermaker, used instead of create-react-app for creating boilerplate code. 
