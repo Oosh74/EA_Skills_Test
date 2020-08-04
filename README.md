@@ -4,7 +4,7 @@ This app is a mock dashboard for data visualization and retrieval.
 
 ## How To Use:
 Simply vist the site below. 
-- [Deployed Site](https://ea-skill-test.herokuapp.com/)
+- [Deployed Site](https://visualdatadash.herokuapp.com/)
 Once there, feel free to check out the core features. The left hand panel can be opened and will allow you to navigate to the different charts, and the bottom navbar will be accessible to print the page, download the page as a .pdf, or retrieve the current data set you are viewing. Hover your mouse over the charts for tooltip displays. Also note that the login button is placeholder for stretch goals/placeholder features. 
 
 ## Core Technologies
