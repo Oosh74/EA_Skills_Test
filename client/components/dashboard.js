@@ -223,7 +223,7 @@ function Dashboard(props) {
             Data Dashboard
           </Typography>
           <Button className={classes.rightToolbar} color="inherit">
-            Login
+            Logout
           </Button>
         </Toolbar>
       </AppBar>
