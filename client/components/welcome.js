@@ -8,7 +8,8 @@ export default function Welcome() {
         Welcome.
       </Typography>
       <Typography variant="h6">
-        This is your dashboard. Here you will find important news and info.
+        This is your dashboard. Here is where admins could send important news
+        and info.
       </Typography>
       <Typography variant="body1" paragraph>
         On the right you will see the university that is currently selected.
@@ -16,8 +17,7 @@ export default function Welcome() {
         bottom navigation bar for retrieval options.
       </Typography>
       <Typography color="textSecondary" variant="subtitle2">
-        Please contact usherjared@yahoo.com for support, and thank you for
-        choosing Education Analytics.
+        Thank you for viewing the project!
       </Typography>
     </Container>
   );

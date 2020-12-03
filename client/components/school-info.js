@@ -5,8 +5,9 @@ export default function SchoolInfo(props) {
   return (
     <React.Fragment>
       <Typography variant="h6" color="primary">
-        {props.school.name}
+        Data Set Info:
       </Typography>
+      <Typography variant="body1">School: {props.school.name}</Typography>
       <Typography variant="body1">City: {props.school.city}</Typography>
       <Typography variant="body1">State: {props.school.state}</Typography>
       <Typography variant="body1">Zip: {props.school.zip}</Typography>
