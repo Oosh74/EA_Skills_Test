@@ -1,7 +1,7 @@
 # This app is currently under development.
 
 # Data Dashboard:
-This app is a data visualization tool. Currently, the app allows to see charts and graphs for a provided data set, and retrieval options that include:
+This app is a data visualization tool. The goal of this app is to demonstrate API data retrieval abilities, to create a demo of what a data visualization app could look like, and charting the retrieved data.  Currently, the app allows to see charts and graphs for a provided data set, and retrieval options that include:
 - Print Page
 - Save Page as 'PDF' (Broken)
 - Download Data
