@@ -32,9 +32,7 @@ class Routes extends Component {
   }
 }
 
-/**
- * CONTAINER
- */
+//CONTAINER
 const mapState = (state) => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.

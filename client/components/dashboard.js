@@ -164,7 +164,7 @@ function Dashboard(props) {
   };
 
   //Utility function that helps pick which chart to render based on redux state
-  const chartRender = (prog, ethn, ret) => {
+  const chartRender = (prog, ethn) => {
     if (prog) {
       return <ProgramChart programData={props.programData} />;
     } else if (ethn) {
@@ -220,7 +220,7 @@ function Dashboard(props) {
             <Menu />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Education Analytics
+            Data Dashboard
           </Typography>
           <Button className={classes.rightToolbar} color="inherit">
             Login
@@ -307,7 +307,6 @@ function Dashboard(props) {
           </Grid>
         </Container>
       </main>
-
       {/* <------- BOTTOM NAV -------> */}
       <BottomNavigation showLabels className={classes.bottomNav}>
         <BottomNavigationAction
@@ -324,12 +323,6 @@ function Dashboard(props) {
             pageToPdf();
           }}
         />
-        {/* <BottomNavigationAction
-          href={downloadHelper}
-          download
-          label="Download Data"
-          icon={<GetAppIcon />}
-        /> */}
         {downloadHelper()}
       </BottomNavigation>
     </div>
